@@ -6,6 +6,17 @@ tate = 20
 yoko = 10
 masu_size = 40
 
+block_color = {
+            0:"gray",
+            1:"cyan",
+            2: "yellow",
+            3: "green",
+            4: "red",
+            5: "blue",
+            6: "orange",
+            7: "purple" 
+            }
+
 
 # 2次元リスト　盤面は0　壁は9
 masu_data = [[0 for i in range(yoko + 2)] for j in range(tate + 2)]
@@ -20,9 +31,9 @@ class Tetris():
         self.root = root
         self.canvas = tk.Canvas(self.root, width=yoko * masu_size, height=tate * masu_size, bg="gray")
         self.canvas.pack()
-        self.board()
-
-        self.createMino()
+        self.current_block = None
+        self.choiseMino()
+        self.drawMino()
 
 
     #盤面を描画　20×10
@@ -33,7 +44,8 @@ class Tetris():
                 y1 = row * masu_size
                 x2 = x1 + masu_size
                 y2 = y1 + masu_size
-                self.canvas.create_rectangle(x1, y1, x2, y2, outline="white")
+                color = block_color[masu_data[row + 1][col + 1]]
+                self.canvas.create_rectangle(x1, y1, x2, y2,fill = color, outline="white")
 
 
     #落ちてくるミノの種類を決定
@@ -85,32 +97,51 @@ class Tetris():
         mino = random.choice(mino_data)
         self.current_block = mino
         
-    #二次元配列にそれぞれの数値を打ち込む
-    def createMino():
+    #二次元配列にそれぞれの数値を代入
         for row in range(len(mino)):
-        for col in range(len(mino[0])):
-            if mino[row][col] != 0:
-                masu_data[row+1][col+(yoko//2)-1] = mino[row][col]
+            for col in range(len(mino[0])):
+                if mino[row][col] != 0:
+                    masu_data[row+1][col+(yoko//2)-1] = mino[row][col]
 
     
 
     #盤面の数値ごとに、ブロックの色を表示していく。または更新していく
+    def drawMino(self):
+        self.canvas.delete("all") 
+        #
+        for row in range(tate):
+            for col in range(yoko):
+                x1 = col * masu_size
+                y1 = row * masu_size
+                x2 = x1 + masu_size
+                y2 = y1 + masu_size
+                color = block_color[masu_data[row + 1][col + 1]]
+                self.canvas.create_rectangle(x1, y1, x2, y2, fill=color, outline="white")
 
+        self.root.after(500, self.dropMino)
 
 
 
         
             
     #落ちる間隔を0.5秒で設定、⇩で同様に 
+    def dropMino(self):
+
+        self.choiseMino()
+        self.drawMino()
+
+
+    
+    
+    #下で停止
 
 
     #左右に移動できるようにする
-
+    
 
     #回転させる 
 
-
-    #下で止まったら、停止
+    
 
 
     #横がそろったら一列削除
