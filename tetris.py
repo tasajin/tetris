@@ -128,7 +128,7 @@ class Tetris():
     def dropMino(self):
 
         self.choiseMino()
-        self.drawMino()
+
 
 
     
