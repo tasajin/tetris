@@ -35,6 +35,11 @@ class Tetris():
         self.choiseMino()
         self.drawMino()
 
+
+        self.root.bind('<Down>', lambda event: self.moveDown())
+        self.root.bind('<Left>', lambda event: self.moveLeft())
+        self.root.bind('<Right>', lambda event: self.moveRight())
+
         self.root.after(500, self.dropMino)
 
 
@@ -141,7 +146,17 @@ class Tetris():
 
 
     #左右に移動できるようにする
-    
+    def moveDown(self):
+        self.move(0, 1)
+        self.drawMino()
+
+    def moveLeft(self):
+        self.move(-1, 0)
+        self.drawMino()
+
+    def moveRight(self):
+        self.move(1, 0)
+        self.drawMino()
 
     #回転させる 
 
