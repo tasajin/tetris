@@ -132,9 +132,13 @@ class Tetris():
         for row in range(tate, 0, -1):
             for col in range(1, yoko + 1):
                 if masu_data[row][col] != 0:
-                    if new_block[row + dy][col + dx] != 0 or new_block[row + dy][col + dx] == 9:
+                    if new_block[row + dy][col + dx] != 0 or new_block[row + dy][col + dx] == 9 or col + dx < 1 or col + dx > yoko:
                         return False
                     new_block[row + dy][col + dx] = masu_data[row][col]
+
+        for row in range(tate, 0, -1):
+            for col in range(1, yoko + 1):
+                new_block[row + dy][col + dx] = masu_data[row][col]
 
         for row in range(1, tate + 2):
             for col in range(1, yoko + 1):
