@@ -132,7 +132,15 @@ class Tetris():
         for row in range(tate, 0, -1):
             for col in range(1, yoko + 1):
                 if masu_data[row][col] != 0:
-                    if new_block[row + dy][col + dx] != 0 or new_block[row + dy][col + dx] == 9 or col + dx < 1 or col + dx > yoko:
+                    if (
+                        new_block[row + dy][col + dx] != 0
+                        or new_block[row + dy][col + dx] == 9
+                        or col + dx < 1 
+                        or col + dx > yoko
+                        or masu_data[row + 1][col] == 9
+                    ):
+                        if dy == 1:
+                            self.choiseMino()
                         return False
                     new_block[row + dy][col + dx] = masu_data[row][col]
 
@@ -171,7 +179,6 @@ class Tetris():
 
 
 
-    #強制落下
 
 
 
